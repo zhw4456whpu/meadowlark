@@ -11,19 +11,29 @@ var handlebars = require('express3-handlebars').create({ defaultLayout:'main' })
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
-//////////////////////////////////////////////静态资源路径设置ks/////////////
+//////////////////////////////////////////////静态资源路径设置ks，放在所有路由之前/////////////
 app.use(express.static(__dirname + '/public'));
 var fortunes = require('./lib/fortune.js');
 
-//////////////////////////////////////////////路由部分ks/////////////////////
+//////////////////////////////////////////////页面测试开关，放在所有路由之前//////////////////
+app.use(function(req,res,next){
+	res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
+	next();
+})
+//////////////////////////////////////////////路由部分ks/////////////////////////////////////
 app.get('/', function(req, res){
 	res.render('home');
 });
 app.get('/about', function(req, res){
 	var randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-	res.render('about', { fortune: fortunes.getFortune() });
+	res.render('about', { fortune: fortunes.getFortune(),pageTestScript:'/qa/tests-about.js' });
 });
-
+app.get('/tours/hood-river', function(req, res){
+	res.render('tours/hood-river');
+});
+app.get('/tours/request-group-rate', function(req, res){
+	res.render('tours/request-group-rate');
+});
 
 ///////////////////////////////////////////////中间件部分ks////////////////////
 // 定制404 页面
