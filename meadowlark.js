@@ -13,6 +13,7 @@ app.set('view engine', 'handlebars');
 
 //////////////////////////////////////////////静态资源路径设置ks/////////////
 app.use(express.static(__dirname + '/public'));
+var fortunes = require('./lib/fortune.js');
 
 //////////////////////////////////////////////路由部分ks/////////////////////
 app.get('/', function(req, res){
@@ -20,7 +21,7 @@ app.get('/', function(req, res){
 });
 app.get('/about', function(req, res){
 	var randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-	res.render('about', { fortune: randomFortune });
+	res.render('about', { fortune: fortunes.getFortune() });
 });
 
 
@@ -46,12 +47,6 @@ app.use(function(err, req, res, next){
 	console.log( 'Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.' );
 });*/
 
-var fortunes = [
-"Conquer your fears or they will conquer you.",
-"Rivers need springs.",
-"Do not fear what you don't know.",
-"You will have a pleasant surprise.",
-"Whenever possible, keep it simple.",
-];
+
 
 module.exports = app;
