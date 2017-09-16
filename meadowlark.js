@@ -19,7 +19,7 @@ var fortunes = require('./lib/fortune.js');
 app.use(function(req,res,next){
 	res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
 	next();
-})
+});
 //////////////////////////////////////////////路由部分ks/////////////////////////////////////
 app.get('/', function(req, res){
 	res.render('home');
@@ -57,6 +57,6 @@ app.use(function(err, req, res, next){
 	console.log( 'Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.' );
 });*/
 
-
-
+//测试js去毛，jshint meadowlark，返回meadowlark.js: line 61, col 49, Missing semicolon. 1 error;给句末加上分好';'就好了
+if( app.thing === null ) console.log( 'bleat!' )
 module.exports = app;
