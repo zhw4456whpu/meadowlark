@@ -6,7 +6,17 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 
 // 设置handlebars 视图引擎
-var handlebars = require('express3-handlebars').create({ defaultLayout:'main' });
+//var handlebars = require('express3-handlebars').create({ defaultLayout:'main' });
+var handlebars = require('express3-handlebars').create({
+	defaultLayout:'main',
+	helpers: {
+		section: function(name, options){
+			if(!this._sections) this._sections = {};
+			this._sections[name] = options.fn(this);
+			return null;
+		}
+	}
+});
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -35,6 +45,18 @@ app.get('/tours/request-group-rate', function(req, res){
 	res.render('tours/request-group-rate');
 });
 
+app.get('/clienttemplate',function(req,res){
+	res.render('clienttemplate')
+})
+
+app.get('/data/clienttemplate',function(req,res){
+	res.json({
+		animal:'squirrel',
+		bodyPart:'tail',
+		adjective: 'bushy',
+		noun: 'heck',
+	});
+})
 ///////////////////////////////////////////////中间件部分ks////////////////////
 // 定制404 页面
 app.use(function(req, res){
@@ -50,8 +72,9 @@ app.use(function(err, req, res, next){
 	res.type('text/plain');
 	res.status(500);
 	res.send('500 - Server Error');*/
-	res.status(500);
-	res.render('500');
+	console.log('error:'+err);
+	res.status(505);
+	res.render('505');
 });
 /*app.listen(app.get('port'), function(){
 	console.log( 'Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.' );

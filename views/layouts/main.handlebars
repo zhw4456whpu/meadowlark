@@ -2,6 +2,8 @@
 <html>
 	<head>
 		<title>Meadowlark Travel</title>
+		{{!handlebars的注释，服务器端可见，客户端不可见}}
+	
 		{{#if showTests}}
 			<link rel="stylesheet" type="text/css" href="/vendor/mocha.css">
 		{{/if}}
@@ -10,6 +12,7 @@
 	<body>
 		<header><img src="/images/Koala.jpg" alt="Meadowlark Travel Logo" width="100" height="100"></header>
 		{{{body}}}
+		
 		{{#if showTests}}
 			<div id="mocha"></div>
 			<script src="/vendor/mocha.js"></script>
@@ -27,5 +30,6 @@
 				mocha.run();
 			</script>
 		{{/if}}
+		<footer>&copy; {{copyrightYear}} Meadowlark Travel</footer>
 	</body>
 </html>
