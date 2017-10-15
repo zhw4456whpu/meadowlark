@@ -56,6 +56,10 @@ app.get('/data/clienttemplate',function(req,res){
 		adjective: 'bushy',
 		noun: 'heck',
 	});
+});
+
+app.get('/jquerytest',function(req,res){
+	res.render('jquerytest')
 })
 ///////////////////////////////////////////////中间件部分ks////////////////////
 // 定制404 页面
